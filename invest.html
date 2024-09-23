@@ -24,7 +24,7 @@
             position: relative;
             margin: auto;
             height: 60vh;
-            width: 80vw;
+            width: 90vw; /* Increased width for better mobile usability */
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             border-radius: 10px;
             background-color: white;
@@ -102,14 +102,86 @@
             background-color: #e7f3fe;
             border-left: 5px solid #007bff;
         }
+        .animation-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        @keyframes walking {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+        #animatedPerson {
+            animation: walking 0.5s infinite;
+        }
+        @keyframes jumping {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-30px); }
+        }
+        .jump {
+            animation: jumping 0.5s;
+        }
     </style>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Time', 'Bitcoin (BTC)', 'Ethereum (ETH)'],
+                [0, 0, 0],
+                [1, 100, 90],
+                [2, 120, 110],
+                [3, 140, 130],
+                [4, 150, 140],
+                [5, 160, 150],
+                [6, 170, 160],
+                [7, 180, 170],
+                [8, 190, 180],
+                [9, 200, 190]
+            ]);
+
+            var options = {
+                title: 'Real-Time Crypto Charts',
+                curveType: 'function',
+                legend: { position: 'bottom' },
+                width: '100%',
+                height: '100%'
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+
+        function fetchCryptoData() {
+            fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd')
+                .then(response => response.json())
+                .then(data => {
+                    const btcPrice = data.bitcoin.usd;
+                    const ethPrice = data.ethereum.usd;
+                    // Update chart data (you would need to handle this correctly based on your chart library)
+                })
+                .catch(err => console.error(err));
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const consistencyButton = document.getElementById('consistencyButton');
+            const animatedPerson = document.getElementById('animatedPerson');
+
+            consistencyButton.addEventListener('click', function() {
+                animatedPerson.classList.add('jump');
+                setTimeout(() => {
+                    animatedPerson.classList.remove('jump');
+                }, 500); // Duration of the jump animation
+            });
+        });
+    </script>
 </head>
 <body>
     <div class="container">
         <h2>Real-Time Crypto Charts</h2>
-        <div class="chart-container">
-            <canvas id="cryptoChart"></canvas>
-        </div>
+        <div class="chart-container" id="chart_div"></div>
         <a href="#" class="invest-button">Invest With Sokrin</a>
         
         <div class="trading-tips">
@@ -133,119 +205,15 @@
             <textarea class="message-area" id="message" placeholder="Type your message here..."></textarea>
             <button class="send-button" id="sendButton">Send</button>
         </div>
+
+        <div class="animation-container">
+            <img id="animatedPerson" src="image/person.gif" alt="Moving Person" style="width: 100px; cursor: pointer; position: relative;">
+            <br>
+            <button id="consistencyButton" class="invest-button">Consistency</button>
+        </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        const ctx = document.getElementById('cryptoChart').getContext('2d');
-        const cryptoChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: [],
-                datasets: [
-                    {
-                        label: 'Bitcoin (BTC)',
-                        borderColor: 'gold',
-                        backgroundColor: 'rgba(255, 215, 0, 0.2)',
-                        data: [],
-                        fill: true,
-                        borderWidth: 2,
-                        pointRadius: 5,
-                        pointHoverRadius: 7,
-                    },
-                    {
-                        label: 'Ethereum (ETH)',
-                        borderColor: 'blue',
-                        backgroundColor: 'rgba(0, 123, 255, 0.2)',
-                        data: [],
-                        fill: true,
-                        borderWidth: 2,
-                        pointRadius: 5,
-                        pointHoverRadius: 7,
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    x: {
-                        type: 'linear',
-                        position: 'bottom',
-                        title: {
-                            display: true,
-                            text: 'Time (minutes)',
-                            font: {
-                                size: 16,
-                                weight: 'bold'
-                            }
-                        },
-                        grid: {
-                            color: 'rgba(0, 123, 255, 0.2)',
-                            lineWidth: 1
-                        }
-                    },
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'Price (USD)',
-                            font: {
-                                size: 16,
-                                weight: 'bold'
-                            }
-                        },
-                        grid: {
-                            color: 'rgba(0, 123, 255, 0.2)',
-                            lineWidth: 1
-                        }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'top',
-                        labels: {
-                            font: {
-                                size: 14,
-                                weight: 'bold'
-                            }
-                        }
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(tooltipItem) {
-                                return `${tooltipItem.dataset.label}: $${tooltipItem.raw}`;
-                            }
-                        }
-                    }
-                }
-            }
-        });
-
-        function fetchCryptoData() {
-            fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd')
-                .then(response => response.json())
-                .then(data => {
-                    const time = cryptoChart.data.labels.length; // Using index as time
-                    const btcPrice = data.bitcoin.usd;
-                    const ethPrice = data.ethereum.usd;
-
-                    // Update chart data
-                    cryptoChart.data.labels.push(time);
-                    cryptoChart.data.datasets[0].data.push(btcPrice);
-                    cryptoChart.data.datasets[1].data.push(ethPrice);
-
-                    // Limit the data points to the last 30 for better readability
-                    if (cryptoChart.data.labels.length > 30) {
-                        cryptoChart.data.labels.shift();
-                        cryptoChart.data.datasets[0].data.shift();
-                        cryptoChart.data.datasets[1].data.shift();
-                    }
-
-                    cryptoChart.update();
-                })
-                .catch(err => console.error(err));
-        }
-
         // Chatbot interaction
         const sendButton = document.getElementById('sendButton');
         const chatbox = document.getElementById('chatbox');
@@ -263,19 +231,13 @@
                 messageInput.value = '';
 
                 // Simulated AI response
-                setTimeout(() => {
-                    const aiResponseDiv = document.createElement('div');
-                    aiResponseDiv.className = 'ai-response';
-                    aiResponseDiv.textContent = `AI: Thank you for your message!`;
-                    chatbox.appendChild(aiResponseDiv);
-                    chatbox.scrollTop = chatbox.scrollHeight; // Scroll to bottom
-                }, 500);
+                const aiResponseDiv = document.createElement('div');
+                aiResponseDiv.className = 'ai-response';
+                aiResponseDiv.textContent = `AI: Thank you for your message!`;
+                chatbox.appendChild(aiResponseDiv);
+                chatbox.scrollTop = chatbox.scrollHeight; // Scroll to bottom
             }
         });
-
-        // Fetch data every minute
-        setInterval(fetchCryptoData, 60000);
-        fetchCryptoData(); // Initial fetch
     </script>
 </body>
 </html>
