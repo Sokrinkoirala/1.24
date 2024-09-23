@@ -1,34 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Investment Opportunity</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
         body, html {
             margin: 0;
             padding: 0;
+            height: 100%;
+            width: 100%;
             font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
+            background-image: url('image/img2.jpg'); /* Using img2.jpg as background */
+            background-size: cover; /* Ensures the image covers the entire page */
+            background-position: center; /* Keeps the image centered */
+            background-repeat: no-repeat; /* Prevents repeating of the image */
+            background-attachment: fixed; /* Keeps the background in place when scrolling */
         }
+
         .container {
             padding: 50px;
+            background-color: rgba(255, 255, 255, 0.8); /* Adds a white overlay with transparency */
+            border-radius: 10px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
+
         h2 {
             text-align: center;
             margin-bottom: 30px;
             color: #007bff;
         }
+
         .chart-container {
             position: relative;
             margin: auto;
             height: 60vh;
-            width: 90vw; /* Increased width for better mobile usability */
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            width: 90vw;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             border-radius: 10px;
             background-color: white;
         }
+
         .invest-button {
             display: block;
             margin: 20px auto;
@@ -43,20 +59,24 @@
             transition: background-color 0.3s, transform 0.3s;
             text-decoration: none;
         }
+
         .invest-button:hover {
             background-color: #0056b3;
             transform: scale(1.05);
         }
+
         .trading-tips {
             margin-top: 30px;
             background-color: rgba(0, 123, 255, 0.1);
             padding: 20px;
             border-radius: 10px;
         }
+
         .tips-list {
             list-style-type: disc;
             padding-left: 20px;
         }
+
         .messaging-section {
             margin-top: 30px;
             padding: 20px;
@@ -64,6 +84,7 @@
             border-radius: 10px;
             position: relative;
         }
+
         .chatbox {
             max-height: 300px;
             overflow-y: auto;
@@ -73,6 +94,7 @@
             background-color: white;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
+
         .message-area {
             width: 100%;
             height: 100px;
@@ -81,6 +103,7 @@
             border: 1px solid #ced4da;
             padding: 10px;
         }
+
         .send-button {
             display: block;
             margin: 0 auto;
@@ -92,9 +115,11 @@
             color: white;
             cursor: pointer;
         }
+
         .send-button:hover {
             background-color: #0056b3;
         }
+
         .ai-response {
             margin: 10px 0;
             padding: 10px;
@@ -102,27 +127,34 @@
             background-color: #e7f3fe;
             border-left: 5px solid #007bff;
         }
+
         .animation-container {
             text-align: center;
             margin-top: 30px;
         }
+
         @keyframes walking {
             0% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
             100% { transform: translateY(0); }
         }
+
         #animatedPerson {
             animation: walking 0.5s infinite;
         }
+
         @keyframes jumping {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-30px); }
         }
+
         .jump {
             animation: jumping 0.5s;
         }
     </style>
+
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
     <script>
         google.charts.load('current', {'packages':['corechart']});
         google.charts.setOnLoadCallback(drawChart);
@@ -154,17 +186,6 @@
             chart.draw(data, options);
         }
 
-        function fetchCryptoData() {
-            fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd')
-                .then(response => response.json())
-                .then(data => {
-                    const btcPrice = data.bitcoin.usd;
-                    const ethPrice = data.ethereum.usd;
-                    // Update chart data (you would need to handle this correctly based on your chart library)
-                })
-                .catch(err => console.error(err));
-        }
-
         document.addEventListener('DOMContentLoaded', function() {
             const consistencyButton = document.getElementById('consistencyButton');
             const animatedPerson = document.getElementById('animatedPerson');
@@ -178,12 +199,13 @@
         });
     </script>
 </head>
+
 <body>
     <div class="container">
         <h2>Real-Time Crypto Charts</h2>
         <div class="chart-container" id="chart_div"></div>
         <a href="#" class="invest-button">Invest With Sokrin</a>
-        
+
         <div class="trading-tips">
             <h2>Crypto Trading Tips</h2>
             <p>Enhance your trading strategy with these essential tips:</p>
@@ -233,11 +255,15 @@
                 // Simulated AI response
                 const aiResponseDiv = document.createElement('div');
                 aiResponseDiv.className = 'ai-response';
-                aiResponseDiv.textContent = `AI: Thank you for your message!`;
+                aiResponseDiv.textContent = "AI: Let me analyze that for you...";
                 chatbox.appendChild(aiResponseDiv);
-                chatbox.scrollTop = chatbox.scrollHeight; // Scroll to bottom
+
+                // Scroll to the bottom of the chatbox
+                chatbox.scrollTop = chatbox.scrollHeight;
             }
         });
     </script>
 </body>
+
 </html>
+

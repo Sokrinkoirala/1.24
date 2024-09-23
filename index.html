@@ -264,7 +264,7 @@
 
       // Show the plane after submission
       document.getElementById('plane').style.display = 'block';
-      document.getElementById('plane').style.animation = 'fly-plane 5s linear forwards';
+      document.getElementById('plane').style.animation = 'fly-plane 1s linear forwards';
 
       // Redirect to invest.html after a delay
       setTimeout(() => {
@@ -275,9 +275,9 @@
     window.onload = function() {
       const plane = document.getElementById('plane');
       plane.style.display = 'block';
-      plane.style.animation = 'fly-plane 2s linear forwards';
+      plane.style.animation = 'fly-plane 1s linear forwards';
       
-      // Hide the plane after 3 seconds
+      // Remove the plane after 1 seconds
       setTimeout(() => {
         plane.style.display = 'none';
       }, 5000);
