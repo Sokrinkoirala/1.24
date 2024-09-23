@@ -47,6 +47,61 @@
             background-color: #0056b3;
             transform: scale(1.05);
         }
+        .trading-tips {
+            margin-top: 30px;
+            background-color: rgba(0, 123, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .tips-list {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        .messaging-section {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: rgba(0, 123, 255, 0.1);
+            border-radius: 10px;
+            position: relative;
+        }
+        .chatbox {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            border: 1px solid #007bff;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .message-area {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            padding: 10px;
+        }
+        .send-button {
+            display: block;
+            margin: 0 auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        .send-button:hover {
+            background-color: #0056b3;
+        }
+        .ai-response {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #e7f3fe;
+            border-left: 5px solid #007bff;
+        }
     </style>
 </head>
 <body>
@@ -56,6 +111,28 @@
             <canvas id="cryptoChart"></canvas>
         </div>
         <a href="#" class="invest-button">Invest With Sokrin</a>
+        
+        <div class="trading-tips">
+            <h2>Crypto Trading Tips</h2>
+            <p>Enhance your trading strategy with these essential tips:</p>
+            <ul class="tips-list">
+                <li><strong>Research Thoroughly:</strong> Understand market trends and cryptocurrencies.</li>
+                <li><strong>Start Small:</strong> Begin with a small investment to learn the ropes.</li>
+                <li><strong>Diversify:</strong> Spread investments across various assets.</li>
+                <li><strong>Stay Updated:</strong> Follow credible sources for market news.</li>
+                <li><strong>Use Reliable Exchanges:</strong> Choose platforms with strong security.</li>
+                <li><strong>Set Stop-Loss Limits:</strong> Protect your investments effectively.</li>
+            </ul>
+        </div>
+
+        <div class="messaging-section">
+            <h2>AI Chatbot</h2>
+            <div class="chatbox" id="chatbox">
+                <div class="ai-response">Hello! I'm your AI assistant. How can I help you with your investments today?</div>
+            </div>
+            <textarea class="message-area" id="message" placeholder="Type your message here..."></textarea>
+            <button class="send-button" id="sendButton">Send</button>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -168,6 +245,33 @@
                 })
                 .catch(err => console.error(err));
         }
+
+        // Chatbot interaction
+        const sendButton = document.getElementById('sendButton');
+        const chatbox = document.getElementById('chatbox');
+        const messageInput = document.getElementById('message');
+
+        sendButton.addEventListener('click', () => {
+            const userMessage = messageInput.value;
+            if (userMessage) {
+                // Display user message
+                const userMessageDiv = document.createElement('div');
+                userMessageDiv.textContent = `You: ${userMessage}`;
+                chatbox.appendChild(userMessageDiv);
+                
+                // Clear input
+                messageInput.value = '';
+
+                // Simulated AI response
+                setTimeout(() => {
+                    const aiResponseDiv = document.createElement('div');
+                    aiResponseDiv.className = 'ai-response';
+                    aiResponseDiv.textContent = `AI: Thank you for your message!`;
+                    chatbox.appendChild(aiResponseDiv);
+                    chatbox.scrollTop = chatbox.scrollHeight; // Scroll to bottom
+                }, 500);
+            }
+        });
 
         // Fetch data every minute
         setInterval(fetchCryptoData, 60000);
