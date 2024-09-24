@@ -61,8 +61,8 @@
     }
 
     .profile-pic {
-      width: 210px;
-      height: 210px;
+      width: 150px;
+      height: 150px;
       border-radius: 50%;
       border: 3px solid white;
       margin: 10px auto;
@@ -76,7 +76,7 @@
     }
 
     .profile h1 {
-      font-size: 2em;
+      font-size: 1.8em;
       font-weight: bold;
       color: #333;
     }
@@ -87,15 +87,15 @@
 
     .button-section {
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
+      align-items: center;
       margin-bottom: 20px;
     }
 
     .button-section a, 
     .button-section button {
-      flex-grow: 1;
-      margin: 0 10px;
-      padding: 12px 0;
+      margin: 10px 0;
+      padding: 12px 20px;
       font-size: 16px;
       font-weight: bold;
       border: 2px solid #007bff;
@@ -104,7 +104,8 @@
       color: #007bff;
       background-color: white;
       position: relative;
-      overflow: hidden;
+      width: 100%;
+      max-width: 300px;
     }
 
     .button-section a:hover, 
@@ -113,29 +114,9 @@
       color: white;
     }
 
-    .button-section a.loading::after, 
-    .button-section button.loading::after {
-      content: '';
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 20px;
-      height: 20px;
-      background: white;
-      border-radius: 50%;
-      animation: loading 1s infinite;
-      transform: translate(-50%, -50%);
-    }
-
-    @keyframes loading {
-      0% { transform: translate(-50%, -50%) scale(1); }
-      50% { transform: translate(-50%, -50%) scale(1.5); }
-      100% { transform: translate(-50%, -50%) scale(1); }
-    }
-
     .portal {
       background-color: rgba(0, 123, 255, 0.85);
-      padding: 30px;
+      padding: 20px;
       border-radius: 10px;
       color: white;
       text-align: center;
@@ -157,18 +138,17 @@
       color: white;
     }
 
-    @keyframes fly-plane {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100vw); }
-    }
-
     .plane {
       position: absolute;
       top: 20%;
       left: -200px;
       width: 300px;
       display: none;
-      animation: fly-plane 10s linear forwards;
+    }
+
+    @keyframes fly-plane {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100vw); }
     }
 
     @media (max-width: 768px) {
@@ -176,14 +156,28 @@
         padding: 30px;
       }
 
+      .profile-pic {
+        width: 120px;
+        height: 120px;
+      }
+
       .profile h1 {
-        font-size: 1.6em;
+        font-size: 1.4em;
       }
 
       .button-section a, 
       .button-section button {
         font-size: 14px;
-        padding: 10px 0;
+        padding: 10px;
+        max-width: 100%;
+      }
+
+      .portal {
+        padding: 15px;
+      }
+
+      h2 {
+        font-size: 1.4em;
       }
     }
   </style>
@@ -202,7 +196,7 @@
       <div class="profile">
         <img src="image/sokro.jpeg" alt="Sokrin Koirala" class="profile-pic">
         <h1>Sokrin Koirala</h1>
-        <p>Entrepreneur | Digital Marketing | Graphic Design | IT Specialist</p>
+        <p>Entrepreneur | Digital Marketing | Start-Ups | IT Specialist</p>
       </div>
 
       <div class="button-section">
@@ -250,6 +244,11 @@
     function showRegistrationForm() {
       document.getElementById('login-section').style.display = 'none';
       document.getElementById('signup-section').style.display = 'block';
+      
+      // Show the plane after clicking the register button
+      const plane = document.getElementById('plane');
+      plane.style.display = 'block';
+      plane.style.animation = 'fly-plane 1s linear forwards';
     }
 
     function submitForm() {
@@ -263,8 +262,9 @@
       submitButton.classList.add('loading');
 
       // Show the plane after submission
-      document.getElementById('plane').style.display = 'block';
-      document.getElementById('plane').style.animation = 'fly-plane 1s linear forwards';
+      const plane = document.getElementById('plane');
+      plane.style.display = 'block';
+      plane.style.animation = 'fly-plane 1s linear forwards';
 
       // Redirect to invest.html after a delay
       setTimeout(() => {
@@ -272,19 +272,20 @@
       }, 1000); // Redirect after 1 second
     }
 
+    // Plane animation on page load
     window.onload = function() {
       const plane = document.getElementById('plane');
       plane.style.display = 'block';
-      plane.style.animation = 'fly-plane 1s linear forwards';
-      
-      // Remove the plane after 1 seconds
-      setTimeout(() => {
-        plane.style.display = 'none';
-      }, 5000);
-    }
+      plane.style.animation = 'fly-plane 1s linear forwards'; // Adjust the timing if needed
+    };
   </script>
+
 </body>
 </html>
+
+
+
+
 
 
 

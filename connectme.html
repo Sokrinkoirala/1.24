@@ -115,121 +115,128 @@
     </div>
   </div>
 
-  <!-- Eligibility Checker Section -->
-  <div class="eligibility-container">
-    <h2>Eligibility Checker</h2>
-    <form id="eligibilityForm">
-      <label for="gpa">GPA or Percentage:</label>
-      <input type="text" id="gpa" name="gpa" required placeholder="Enter your GPA or Percentage">
-      <label for="gpaScale">GPA Scale:</label>
-      <select id="gpaScale" name="gpaScale" required>
-        <option value="4">4.0 Scale</option>
-        <option value="10">10.0 Scale</option>
-        <option value="percentage">Percentage</option>
-      </select>
+ <!-- Eligibility Checker Section -->
+<div class="eligibility-container">
+  <h2>Eligibility Checker</h2>
+  <form id="eligibilityForm">
+    <label for="gpa">GPA or Percentage:</label>
+    <input type="number" id="gpa" name="gpa" required placeholder="Enter your GPA or Percentage" step="0.01" min="0">
 
-      <label for="year">Year of Passing:</label>
-      <input type="number" id="year" name="year" required placeholder="Enter your year of passing">
+    <label for="gpaScale">GPA Scale:</label>
+    <select id="gpaScale" name="gpaScale" required>
+      <option value="4">4.0 Scale</option>
+      <option value="10">10.0 Scale</option>
+      <option value="percentage">Percentage</option>
+    </select>
 
-      <label for="degree">Degree Type:</label>
-      <select id="degree" name="degree" required>
-        <option value="bachelors">Bachelors</option>
-        <option value="masters">Masters</option>
-      </select>
+    <label for="year">Year of Passing:</label>
+    <input type="number" id="year" name="year" required placeholder="Enter your year of passing" min="2017" max="2024">
 
-      <label for="englishTest">English Proficiency Test:</label>
-      <select id="englishTest" name="englishTest" required>
-        <option value="duolingo">Duolingo</option>
-        <option value="pte">PTE</option>
-        <option value="ielts">IELTS</option>
-        <option value="sat">SAT</option>
-        <option value="act">ACT</option>
-        <option value="gre">GRE</option>
-        <option value="others">Others</option>
-      </select>
+    <label for="degree">Degree Type:</label>
+    <select id="degree" name="degree" required>
+      <option value="bachelors">Bachelors</option>
+      <option value="masters">Masters</option>
+    </select>
 
-      <label for="testScore">Test Score:</label>
-      <input type="number" id="testScore" name="testScore" required placeholder="Enter your test score">
+    <label for="englishTest">English Proficiency Test:</label>
+    <select id="englishTest" name="englishTest" required>
+      <option value="duolingo">Duolingo</option>
+      <option value="pte">PTE</option>
+      <option value="ielts">IELTS</option>
+      <option value="sat">SAT</option>
+      <option value="act">ACT</option>
+      <option value="gre">GRE</option>
+      <option value="others">Others</option>
+    </select>
 
-      <button type="submit">Check Eligibility</button>
-    </form>
+    <label for="testScore">Test Score:</label>
+    <input type="number" id="testScore" name="testScore" required placeholder="Enter your test score" min="0" step="0.01">
 
-    <div class="message" id="message"></div>
-  </div>
+    <button type="submit">Check Eligibility</button>
+  </form>
 
-  <!-- Bootstrap and JS libraries -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  <div class="message" id="message"></div>
+</div>
 
-  <script>
-    document.getElementById('eligibilityForm').addEventListener('submit', function(event) {
-      event.preventDefault(); // Prevent form submission
-      
-      const gpa = parseFloat(document.getElementById('gpa').value);
-      const gpaScale = document.getElementById('gpaScale').value;
-      const year = parseInt(document.getElementById('year').value);
-      const englishTest = document.getElementById('englishTest').value;
-      const testScore = parseFloat(document.getElementById('testScore').value);
-      const messageDiv = document.getElementById('message');
+<!-- Bootstrap and JS libraries -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 
-      let eligible = true;
-      let errors = [];
+<script>
+  document.getElementById('eligibilityForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent form submission
+    
+    const gpa = parseFloat(document.getElementById('gpa').value);
+    const gpaScale = document.getElementById('gpaScale').value;
+    const year = parseInt(document.getElementById('year').value);
+    const englishTest = document.getElementById('englishTest').value;
+    const testScore = parseFloat(document.getElementById('testScore').value);
+    const messageDiv = document.getElementById('message');
 
-      // Check year eligibility
-      if (year < 2017 || year > 2024) {
-        errors.push("Year must be between 2017 and 2024.");
+    let eligible = true;
+    let errors = [];
+
+    // Validate numeric entries
+    if (isNaN(gpa) || isNaN(year) || isNaN(testScore)) {
+      errors.push("Please enter valid numeric values.");
+      eligible = false;
+    }
+
+    // Check year eligibility
+    if (year < 2017 || year > 2024) {
+      errors.push("Year must be between 2017 and 2024.");
+      eligible = false;
+    }
+
+    // Check GPA or Percentage eligibility
+    if (gpaScale === "4") {
+      if (gpa < 0 || gpa > 4) {
+        errors.push("GPA must be between 0 and 4.");
+        eligible = false;
+      } else if (gpa < 2.5) {
+        errors.push("GPA must be at least 2.5.");
         eligible = false;
       }
-
-      // Check GPA or Percentage eligibility
-      if (gpaScale === "4") {
-        if (gpa < 0 || gpa > 4) {
-          errors.push("GPA must be between 0 and 4.");
-          eligible = false;
-        } else if (gpa < 2.5) {
-          errors.push("GPA must be at least 2.5.");
-          eligible = false;
-        }
-      } else if (gpaScale === "10") {
-        if (gpa < 0 || gpa > 10) {
-          errors.push("GPA must be between 0 and 10.");
-          eligible = false;
-        } else if (gpa < 6) {
-          errors.push("GPA must be at least 6.");
-          eligible = false;
-        }
-      } else if (gpaScale === "percentage") {
-        if (gpa < 0 || gpa > 100) {
-          errors.push("Percentage must be between 0 and 100.");
-          eligible = false;
-        } else if (gpa < 65) {
-          errors.push("Percentage must be at least 65%.");
-          eligible = false;
-        }
-      }
-
-      // Check English proficiency eligibility
-      if (englishTest === "duolingo" && (testScore < 0 || testScore > 160)) {
-        errors.push("Duolingo score must be between 0 and 160.");
+    } else if (gpaScale === "10") {
+      if (gpa < 0 || gpa > 10) {
+        errors.push("GPA must be between 0 and 10.");
         eligible = false;
-      } else if (englishTest === "ielts" && (testScore < 0 || testScore > 9)) {
-        errors.push("IELTS score must be between 0 and 9.");
-        eligible = false;
-      } else if (englishTest === "pte" && (testScore < 0 || testScore > 90)) {
-        errors.push("PTE score must be between 0 and 90.");
+      } else if (gpa < 6) {
+        errors.push("GPA must be at least 6.");
         eligible = false;
       }
-
-      // Display eligibility message
-      if (eligible) {
-        messageDiv.textContent = "Congratulations, you are eligible!";
-        messageDiv.style.color = "green";
-      } else {
-        messageDiv.innerHTML = "You've made an error, Recheck it:<br>" + errors.join("<br>");
-        messageDiv.className = "message error";
+    } else if (gpaScale === "percentage") {
+      if (gpa < 0 || gpa > 100) {
+        errors.push("Percentage must be between 0 and 100.");
+        eligible = false;
+      } else if (gpa < 65) {
+        errors.push("Percentage must be at least 65%.");
+        eligible = false;
       }
-    });
-  </script>
+    }
+
+    // Check English proficiency eligibility
+    if (englishTest === "duolingo" && (testScore < 0 || testScore > 160)) {
+      errors.push("Duolingo score must be between 0 and 160.");
+      eligible = false;
+    } else if (englishTest === "ielts" && (testScore < 0 || testScore > 9)) {
+      errors.push("IELTS score must be between 0 and 9.");
+      eligible = false;
+    } else if (englishTest === "pte" && (testScore < 0 || testScore > 90)) {
+      errors.push("PTE score must be between 0 and 90.");
+      eligible = false;
+    }
+
+    // Display eligibility message
+    if (eligible) {
+      messageDiv.textContent = "Congratulations, you are eligible!";
+      messageDiv.style.color = "green";
+    } else {
+      messageDiv.innerHTML = "You've made an error, Recheck it:<br>" + errors.join("<br>");
+      messageDiv.className = "message error";
+    }
+  });
+</script>
 
 </body>
 </html>
