@@ -249,6 +249,11 @@
       const plane = document.getElementById('plane');
       plane.style.display = 'block';
       plane.style.animation = 'fly-plane 1s linear forwards';
+
+      // Hide the plane after 1 second
+      setTimeout(() => {
+        plane.style.display = 'none';
+      }, 1000);
     }
 
     function submitForm() {
@@ -266,6 +271,11 @@
       plane.style.display = 'block';
       plane.style.animation = 'fly-plane 1s linear forwards';
 
+      // Hide the plane after 1 second
+      setTimeout(() => {
+        plane.style.display = 'none';
+      }, 1000);
+
       // Redirect to invest.html after a delay
       setTimeout(() => {
         window.location.href = 'invest.html';
@@ -277,11 +287,17 @@
       const plane = document.getElementById('plane');
       plane.style.display = 'block';
       plane.style.animation = 'fly-plane 1s linear forwards'; // Adjust the timing if needed
+
+      // Hide the plane after 1 second
+      setTimeout(() => {
+        plane.style.display = 'none';
+      }, 1000);
     };
   </script>
 
 </body>
 </html>
+
 
 
 
