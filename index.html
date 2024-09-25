@@ -12,8 +12,9 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      font-family: Arial, sans-serif;
+      font-family: 'Arial', sans-serif;
       background-color: #f5f5f5;
+      color: #343a40;
     }
 
     /* Main layout */
@@ -26,14 +27,15 @@
 
     /* Sidebar layout */
     .sidebar {
-      background-color: #343a40;
-      color: white;
+      background-color: #87CEFA; /* Light blue */
+      color: #343a40;
       padding: 30px;
       width: 250px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-height: 100vh; /* Ensure sidebar fills the height */
+      min-height: 100vh;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     }
 
     .sidebar .profile-pic {
@@ -42,20 +44,24 @@
       border-radius: 50%;
       margin-bottom: 20px;
       border: 3px solid #ffffff80;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     }
 
     .sidebar h1 {
-      font-size: 1.4em;
+      font-size: 1.6em;
       margin-bottom: 10px;
+      color: #005f7f; /* Darker blue for text */
     }
 
     .sidebar p {
       font-size: 1em;
-      color: #dcdcdc;
+      color: #555; /* Darker grey for description */
+      text-align: center;
+      margin-bottom: 20px;
     }
 
     .sidebar a {
-      color: white;
+      color: #005f7f; /* Darker blue for links */
       text-decoration: none;
       padding: 10px;
       font-size: 1.1em;
@@ -64,40 +70,43 @@
       text-align: center;
       border-radius: 5px;
       margin: 10px 0;
+      background-color: #ffffff; /* White background for buttons */
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     }
 
     .sidebar a:hover {
-      background-color: #007bff;
+      background-color: #005f7f; /* Darker blue on hover */
       color: white;
     }
 
     /* Main content area */
     .content {
       flex-grow: 1;
-      background-image: url('image/img2.jpg');
+      background-image: url('image/img2.jpg'); /* Background image */
       background-size: cover;
       background-position: center;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px; /* Added padding for mobile devices */
-      overflow: auto; /* Prevent overflow issues */
+      padding: 20px;
+      overflow: auto;
     }
 
     .content .frame {
-      background-color: rgba(255, 255, 255, 0.85);
+      background-color: rgba(255, 255, 255, 0.95);
       border-radius: 15px;
       padding: 50px;
       box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
       max-width: 900px;
-      width: 100%; /* Make the frame responsive */
-      position: relative;
+      width: 100%;
       text-align: center;
+      position: relative;
     }
 
     .content h2 {
       color: #007bff;
-      font-size: 1.8em;
+      font-size: 2em;
+      margin-bottom: 20px;
     }
 
     .button-section a, 
@@ -111,7 +120,7 @@
       transition: background-color 0.3s, color 0.3s;
       color: #007bff;
       background-color: white;
-      width: 100%; /* Full width for buttons */
+      width: 100%;
       max-width: 300px;
       display: block;
       margin-left: auto;
@@ -131,12 +140,8 @@
     }
 
     @keyframes fadeIn {
-      0% {
-        opacity: 0;
-      }
-      100% {
-        opacity: 1;
-      }
+      0% { opacity: 0; }
+      100% { opacity: 1; }
     }
 
     .plane {
@@ -180,7 +185,7 @@
       }
 
       .content {
-        height: auto; /* Allow content to resize */
+        height: auto;
       }
 
       .content .frame {
@@ -189,7 +194,7 @@
 
       .button-section a, 
       .button-section button {
-        max-width: 100%; /* Full width for mobile */
+        max-width: 100%;
       }
     }
   </style>
@@ -199,7 +204,7 @@
   <div class="main">
     <!-- Sidebar -->
     <div class="sidebar">
-      <img src="image/sokro.jpeg" alt="Sokrin Koirala" class="profile-pic">
+      <img src="image/sokro.jpeg" alt="Sokrin Koirala" class="profile-pic"> <!-- Profile picture -->
       <h1>Sokrin Koirala</h1>
       <p>Entrepreneur | Digital Marketing | Start-Ups | IT Specialist</p>
 
@@ -213,7 +218,8 @@
     <div class="content">
       <div class="frame animate-fade-in">
         <h2>Register Now</h2>
-        <div id="login-section">
+        <p class="lead">Join our community and stay updated!</p>
+        <div id="login-section" class="button-section">
           <button class="btn btn-outline-primary" onclick="showRegistrationForm()">Register Now</button>
         </div>
         <div id="signup-section" style="display: none;">
@@ -225,7 +231,7 @@
         </div>
       </div>
 
-      <img src="image/plane.png" class="plane" id="plane">
+      <img src="image/plane.png" class="plane" id="plane"> <!-- Plane animation -->
     </div>
   </div>
 
