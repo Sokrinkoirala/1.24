@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>University Finder</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      background-image: url('image/img2.jpg');
+      background-size: cover;
+      background-position: center;
+      color: #fff;
+    }
+    .container {
+      margin-top: 50px;
+    }
+    .results {
+      margin-top: 20px;
+    }
+    .result-item {
+      padding: 20px;
+      border: 1px solid #ddd;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      background-color: white; /* White background for the card */
+      color: green; /* Green text */
+    }
+    .apply-button {
+      margin-top: 10px;
+      display: inline-block;
+      background-color: blue; /* Blue button */
+      color: white; /* White text */
+      padding: 10px 15px;
+      text-decoration: none; /* Remove underline */
+      border-radius: 5px; /* Rounded corners */
+    }
+    img {
+      max-width: 100px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1 class="text-center">University Finder</h1>
+
+    <form id="searchForm" class="form-inline justify-content-center">
+      <input type="text" id="universityQuery" class="form-control mr-2" placeholder="University name" style="width: 200px;">
+      <input type="text" id="countryQuery" class="form-control mr-2" placeholder="Country" style="width: 200px;">
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
+    <div class="results" id="results"></div>
+
+    <h2 class="text-center mt-5">Featured Universities</h2>
+    <div class="results" id="featuredResults"></div>
+  </div>
+
+  <script>
+    // Sample data for universities from Missouri
+    const universitiesMissouri = [
+      { name: "University of Missouri", country: "United States", website: "https://www.missouri.edu", tuition: "$10,500", scholarship: "Various scholarships available", acceptanceRate: "78%" },
+      { name: "Missouri State University", country: "United States", website: "https://www.missouristate.edu", tuition: "$12,000", scholarship: "Need-based scholarships available", acceptanceRate: "77%" },
+      { name: "Washington University in St. Louis", country: "United States", website: "https://wustl.edu", tuition: "$58,000", scholarship: "Merit-based scholarships available", acceptanceRate: "13%" },
+      { name: "Saint Louis University", country: "United States", website: "https://www.slu.edu", tuition: "$45,000", scholarship: "Various scholarships available", acceptanceRate: "75%" },
+      { name: "Truman State University", country: "United States", website: "https://www.truman.edu", tuition: "$12,000", scholarship: "Various scholarships available", acceptanceRate: "62%" },
+      { name: "University of Central Missouri", country: "United States", website: "https://www.ucmo.edu", tuition: "$11,000", scholarship: "Need-based scholarships available", acceptanceRate: "73%" },
+      { name: "Missouri University of Science and Technology", country: "United States", website: "https://www.mst.edu", tuition: "$31,000", scholarship: "Various scholarships available", acceptanceRate: "64%" },
+      { name: "Lindenwood University", country: "United States", website: "https://www.lindenwood.edu", tuition: "$22,000", scholarship: "Various scholarships available", acceptanceRate: "80%" },
+      { name: "Southeast Missouri State University", country: "United States", website: "https://www.semo.edu", tuition: "$16,000", scholarship: "Various scholarships available", acceptanceRate: "68%" },
+      { name: "Northwest Missouri State University", country: "United States", website: "https://www.nwmissouri.edu", tuition: "$14,000", scholarship: "Need-based scholarships available", acceptanceRate: "84%" },
+      { name: "College of the Ozarks", country: "United States", website: "https://www.cofo.edu", tuition: "$0 (work-study program)", scholarship: "Various scholarships available", acceptanceRate: "12%" },
+      { name: "Webster University", country: "United States", website: "https://www.webster.ch", tuition: "$31,000", scholarship: "Various scholarships available", acceptanceRate: "68%" },
+      { name: "Avila University", country: "United States", website: "https://www.avila.edu", tuition: "$26,000", scholarship: "Various scholarships available", acceptanceRate: "59%" },
+      { name: "Missouri Baptist University", country: "United States", website: "https://www.mobap.edu", tuition: "$23,000", scholarship: "Various scholarships available", acceptanceRate: "50%" },
+      { name: "Central Methodist University", country: "United States", website: "https://www.centralmethodist.edu", tuition: "$22,000", scholarship: "Various scholarships available", acceptanceRate: "66%" }
+    ];
+
+    // Sample data for universities from other states
+    const universitiesOtherStates = [
+      { name: "University of Florida", country: "United States", website: "https://www.ufl.edu", tuition: "$10,000", scholarship: "Merit-based scholarships available", acceptanceRate: "37%" },
+      { name: "California State University, Long Beach", country: "United States", website: "https://www.csulb.edu", tuition: "$18,000", scholarship: "Various scholarships available", acceptanceRate: "39%" },
+      { name: "University of North Texas", country: "United States", website: "https://www.unt.edu", tuition: "$11,000", scholarship: "Various scholarships available", acceptanceRate: "58%" },
+      { name: "University of Wyoming", country: "United States", website: "https://www.uwyo.edu", tuition: "$10,000", scholarship: "Need-based scholarships available", acceptanceRate: "94%" },
+      { name: "University of New Mexico", country: "United States", website: "https://www.unm.edu", tuition: "$9,000", scholarship: "Various scholarships available", acceptanceRate: "66%" },
+      { name: "Georgia Southern University", country: "United States", website: "https://www.georgiasouthern.edu", tuition: "$6,000", scholarship: "Various scholarships available", acceptanceRate: "65%" },
+      { name: "Wayne State College", country: "United States", website: "https://www.wsc.edu", tuition: "$9,600", scholarship: "Various scholarships available", acceptanceRate: "86%" },
+      { name: "University of Houston", country: "United States", website: "https://www.uh.edu", tuition: "$9,000", scholarship: "Various scholarships available", acceptanceRate: "57%" },
+      { name: "New Mexico State University", country: "United States", website: "https://www.nmsu.edu", tuition: "$8,000", scholarship: "Various scholarships available", acceptanceRate: "67%" },
+      { name: "Alabama A&M University", country: "United States", website: "https://www.aamu.edu", tuition: "$8,500", scholarship: "Various scholarships available", acceptanceRate: "55%" },
+      { name: "University of Texas at El Paso", country: "United States", website: "https://www.utep.edu", tuition: "$7,000", scholarship: "Various scholarships available", acceptanceRate: "75%" },
+      { name: "Wayne State University", country: "United States", website: "https://www.wayne.edu", tuition: "$15,000", scholarship: "Various scholarships available", acceptanceRate: "52%" },
+      { name: "San Diego State University", country: "United States", website: "https://www.sdsu.edu", tuition: "$19,000", scholarship: "Various scholarships available", acceptanceRate: "36%" },
+      { name: "Florida State University", country: "United States", website: "https://www.fsu.edu", tuition: "$21,000", scholarship: "Various scholarships available", acceptanceRate: "38%" },
+      { name: "University of Illinois at Chicago", country: "United States", website: "https://www.uic.edu", tuition: "$25,000", scholarship: "Various scholarships available", acceptanceRate: "59%" }
+    ];
+
+    // Function to search universities
+    async function searchUniversities() {
+      const query = document.getElementById('universityQuery').value.toLowerCase();
+      const country = document.getElementById('countryQuery').value.toLowerCase();
+      const resultsContainer = document.getElementById('results');
+      resultsContainer.innerHTML = '';
+
+      try {
+        // Fetch data from the free university API
+        const apiResponse = await fetch(`https://universities.hipolabs.com/search?name=${query}&country=${country}`);
+        const apiUniversities = await apiResponse.json();
+
+        // Combine static and API universities
+        const allUniversities = [...universitiesMissouri, ...universitiesOtherStates, ...apiUniversities];
+        const filteredUniversities = allUniversities.filter(uni => 
+          (query === '' || uni.name.toLowerCase().includes(query)) && 
+          (country === '' || uni.country.toLowerCase() === country)
+        );
+
+        filteredUniversities.forEach(uni => {
+          const uniItem = document.createElement('div');
+          uniItem.className = 'result-item';
+          uniItem.innerHTML = `
+            <h4>${uni.name}</h4>
+            <p>Country: ${uni.country}</p>
+            <p>Tuition: ${uni.tuition || 'N/A'}</p>
+            <p>Scholarship Info: ${uni.scholarship || 'N/A'}</p>
+            <p>Acceptance Rate: ${uni.acceptanceRate || 'N/A'}</p>
+            <a href="${uni.website || '#'}" class="apply-button">Apply Now</a>
+          `;
+          resultsContainer.appendChild(uniItem);
+        });
+
+        if (filteredUniversities.length === 0) {
+          resultsContainer.innerHTML = '<p>No universities found.</p>';
+        }
+
+      } catch (error) {
+        console.error('Error fetching university data:', error);
+        resultsContainer.innerHTML = '<p>An error occurred while searching for universities. Please try again later.</p>';
+      }
+    }
+
+    // Event listener for form submission
+    document.getElementById('searchForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      searchUniversities();
+    });
+
+    // Function to display featured universities
+    function displayFeaturedUniversities() {
+      const featuredResultsContainer = document.getElementById('featuredResults');
+      featuredResultsContainer.innerHTML = '';
+
+      universitiesMissouri.forEach(uni => {
+        const uniItem = document.createElement('div');
+        uniItem.className = 'result-item';
+        uniItem.innerHTML = `
+          <h4>${uni.name}</h4>
+          <p>Country: ${uni.country}</p>
+          <p>Tuition: ${uni.tuition}</p>
+          <p>Scholarship Info: ${uni.scholarship}</p>
+          <p>Acceptance Rate: ${uni.acceptanceRate}</p>
+          <a href="https://app.coursefinder.ai/student-platform/d24450f4/sign-up" class="apply-button">Apply Now</a>
+        `;
+        featuredResultsContainer.appendChild(uniItem);
+      });
+    }
+
+    // Display featured universities on page load
+    displayFeaturedUniversities();
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

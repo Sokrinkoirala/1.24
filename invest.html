@@ -65,7 +65,7 @@
             transform: scale(1.05);
         }
 
-        .trading-tips {
+        .trading-tips, .messaging-section {
             margin-top: 30px;
             background-color: rgba(0, 123, 255, 0.1);
             padding: 20px;
@@ -75,14 +75,6 @@
         .tips-list {
             list-style-type: disc;
             padding-left: 20px;
-        }
-
-        .messaging-section {
-            margin-top: 30px;
-            padding: 20px;
-            background-color: rgba(0, 123, 255, 0.1);
-            border-radius: 10px;
-            position: relative;
         }
 
         .chatbox {
@@ -196,6 +188,33 @@
                     animatedPerson.classList.remove('jump');
                 }, 500); // Duration of the jump animation
             });
+
+            // Chatbot interaction
+            const sendButton = document.getElementById('sendButton');
+            const chatbox = document.getElementById('chatbox');
+            const messageInput = document.getElementById('message');
+
+            sendButton.addEventListener('click', () => {
+                const userMessage = messageInput.value;
+                if (userMessage) {
+                    // Display user message
+                    const userMessageDiv = document.createElement('div');
+                    userMessageDiv.textContent = `You: ${userMessage}`;
+                    chatbox.appendChild(userMessageDiv);
+                    
+                    // Clear input
+                    messageInput.value = '';
+
+                    // Simulated AI response
+                    const aiResponseDiv = document.createElement('div');
+                    aiResponseDiv.className = 'ai-response';
+                    aiResponseDiv.textContent = "AI: Let me analyze that for you...";
+                    chatbox.appendChild(aiResponseDiv);
+
+                    // Scroll to the bottom of the chatbox
+                    chatbox.scrollTop = chatbox.scrollHeight;
+                }
+            });
         });
     </script>
 </head>
@@ -234,36 +253,6 @@
             <button id="consistencyButton" class="invest-button">Consistency</button>
         </div>
     </div>
-
-    <script>
-        // Chatbot interaction
-        const sendButton = document.getElementById('sendButton');
-        const chatbox = document.getElementById('chatbox');
-        const messageInput = document.getElementById('message');
-
-        sendButton.addEventListener('click', () => {
-            const userMessage = messageInput.value;
-            if (userMessage) {
-                // Display user message
-                const userMessageDiv = document.createElement('div');
-                userMessageDiv.textContent = `You: ${userMessage}`;
-                chatbox.appendChild(userMessageDiv);
-                
-                // Clear input
-                messageInput.value = '';
-
-                // Simulated AI response
-                const aiResponseDiv = document.createElement('div');
-                aiResponseDiv.className = 'ai-response';
-                aiResponseDiv.textContent = "AI: Let me analyze that for you...";
-                chatbox.appendChild(aiResponseDiv);
-
-                // Scroll to the bottom of the chatbox
-                chatbox.scrollTop = chatbox.scrollHeight;
-            }
-        });
-    </script>
 </body>
 
 </html>
-

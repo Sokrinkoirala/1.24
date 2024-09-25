@@ -13,25 +13,75 @@
       padding: 0;
       height: 100%;
       font-family: Arial, sans-serif;
-      overflow-x: hidden;
-      overflow-y: auto;
+      background-color: #f5f5f5;
+      overflow: hidden;
     }
 
-    .container {
-      background-image: url('image/img5.jpg');
+    /* Main layout */
+    .main {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    /* Sidebar layout */
+    .sidebar {
+      background-color: #343a40;
+      color: white;
+      padding: 30px;
+      width: 250px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .sidebar .profile-pic {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin-bottom: 20px;
+      border: 3px solid #ffffff80;
+    }
+
+    .sidebar h1 {
+      font-size: 1.4em;
+      margin-bottom: 10px;
+    }
+
+    .sidebar p {
+      font-size: 1em;
+      color: #dcdcdc;
+    }
+
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      font-size: 1.1em;
+      transition: background-color 0.3s;
+      width: 100%;
+      text-align: center;
+      border-radius: 5px;
+      margin: 10px 0;
+    }
+
+    .sidebar a:hover {
+      background-color: #007bff;
+      color: white;
+    }
+
+    /* Main content area */
+    .content {
+      flex-grow: 1;
+      background-image: url('image/img2.jpg'); /* Changed from img5.jpg to img2.jpg */
       background-size: cover;
       background-position: center;
-      background-repeat: no-repeat;
-      min-height: 100vh;
-      width: 100vw;
       display: flex;
-      justify-content: center;
       align-items: center;
-      padding: 0;
-      position: relative;
+      justify-content: center;
     }
 
-    .frame {
+    .content .frame {
       background-color: rgba(255, 255, 255, 0.85);
       border-radius: 15px;
       padding: 50px;
@@ -39,57 +89,12 @@
       max-width: 900px;
       width: 90%;
       position: relative;
-    }
-
-    .navbar {
-      background-color: rgba(0, 123, 255, 0.9);
-      width: 100%;
-      position: absolute;
-      top: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-      padding: 10px 0;
-    }
-
-    .navbar-brand {
-      color: gold;
-      font-size: 1.8em;
-      font-weight: bold;
-      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-    }
-
-    .profile-pic {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      border: 3px solid white;
-      margin: 10px auto;
-      display: block;
-    }
-
-    .profile {
       text-align: center;
+    }
+
+    .content h2 {
       color: #007bff;
-      margin-bottom: 30px;
-    }
-
-    .profile h1 {
       font-size: 1.8em;
-      font-weight: bold;
-      color: #333;
-    }
-
-    .profile p {
-      font-size: 1.1em;
-    }
-
-    .button-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 20px;
     }
 
     .button-section a, 
@@ -106,6 +111,9 @@
       position: relative;
       width: 100%;
       max-width: 300px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .button-section a:hover, 
@@ -114,28 +122,19 @@
       color: white;
     }
 
-    .portal {
-      background-color: rgba(0, 123, 255, 0.85);
-      padding: 20px;
-      border-radius: 10px;
-      color: white;
-      text-align: center;
+    /* Animations */
+    .animate-fade-in {
+      opacity: 0;
+      animation: fadeIn 0.5s forwards;
     }
 
-    h2 {
-      margin-bottom: 20px;
-      color: white;
-    }
-
-    .form-control {
-      margin-bottom: 10px;
-    }
-
-    .nepali-check {
-      display: flex;
-      justify-content: space-around;
-      margin-bottom: 15px;
-      color: white;
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
     }
 
     .plane {
@@ -152,31 +151,15 @@
     }
 
     @media (max-width: 768px) {
-      .frame {
+      .sidebar {
+        width: 200px;
+      }
+
+      .content .frame {
         padding: 30px;
       }
 
-      .profile-pic {
-        width: 120px;
-        height: 120px;
-      }
-
-      .profile h1 {
-        font-size: 1.4em;
-      }
-
-      .button-section a, 
-      .button-section button {
-        font-size: 14px;
-        padding: 10px;
-        max-width: 100%;
-      }
-
-      .portal {
-        padding: 15px;
-      }
-
-      h2 {
+      .content h2 {
         font-size: 1.4em;
       }
     }
@@ -184,52 +167,32 @@
 </head>
 <body>
 
-  <nav class="navbar">
-    <div>
-      <a class="navbar-brand" href="#">Sokrin Koirala</a>
-      <a href="privacy-policy.html" class="btn btn-outline-light" style="margin-left: 20px;">Privacy Policy</a>
+  <div class="main">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <img src="image/sokro.jpeg" alt="Sokrin Koirala" class="profile-pic">
+      <h1>Sokrin Koirala</h1>
+      <p>Entrepreneur | Digital Marketing | Start-Ups | IT Specialist</p>
+
+      <a href="about.html">About Me</a>
+      <a href="connectme.html">Connect Me</a>
+      <a href="Myholdings.html">My Holdings</a>
+      <a href="booknow.html">Book Now</a>
     </div>
-  </nav>
 
-  <div class="container">
-    <div class="frame">
-      <div class="profile">
-        <img src="image/sokro.jpeg" alt="Sokrin Koirala" class="profile-pic">
-        <h1>Sokrin Koirala</h1>
-        <p>Entrepreneur | Digital Marketing | Start-Ups | IT Specialist</p>
-      </div>
-
-      <div class="button-section">
-        <button class="btn" onclick="location.href='connectme.html'">Connect Me</button>
-        <button class="btn" onclick="location.href='Myholdings.html'">My Holdings</button>
-        <a href="about.html" class="btn">About Me</a>
-        <a href="booknow.html" class="btn">Book Now</a>
-      </div>
-
-      <div class="portal">
-        <h2 id="title">Register Now</h2>
+    <!-- Main content -->
+    <div class="content">
+      <div class="frame animate-fade-in">
+        <h2>Register Now</h2>
         <div id="login-section">
-          <button class="btn btn-outline-light" onclick="showRegistrationForm()">
-            Register Now
-          </button>
+          <button class="btn btn-outline-primary" onclick="showRegistrationForm()">Register Now</button>
         </div>
         <div id="signup-section" style="display: none;">
           <input type="text" class="form-control" id="name" placeholder="Name" required>
           <input type="text" class="form-control" id="address" placeholder="Address" required>
           <input type="tel" class="form-control" id="contact" placeholder="Contact No." required>
           <input type="email" class="form-control" id="email" placeholder="Email" required>
-          <div class="nepali-check">
-            <label>Are you looking to work with me?</label>
-            <div>
-              <input type="radio" id="workYes" name="work" value="Yes">
-              <label for="workYes">Yes</label>
-            </div>
-            <div>
-              <input type="radio" id="workNo" name="work" value="No">
-              <label for="workNo">No</label>
-            </div>
-          </div>
-          <button class="btn btn-outline-light" id="submit-button" onclick="submitForm()">Submit</button>
+          <button class="btn btn-outline-primary" id="submit-button" onclick="submitForm()">Submit</button>
         </div>
       </div>
 
@@ -281,23 +244,10 @@
         window.location.href = 'invest.html';
       }, 1000); // Redirect after 1 second
     }
-
-    // Plane animation on page load
-    window.onload = function() {
-      const plane = document.getElementById('plane');
-      plane.style.display = 'block';
-      plane.style.animation = 'fly-plane 1s linear forwards'; // Adjust the timing if needed
-
-      // Hide the plane after 1 second
-      setTimeout(() => {
-        plane.style.display = 'none';
-      }, 1000);
-    };
   </script>
 
 </body>
 </html>
-
 
 
 
